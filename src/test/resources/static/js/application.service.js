@@ -16,11 +16,18 @@ class ApplicationService {
 	}
 
 	static apply(form) {
+		let additionalLinkInputs = document.querySelectorAll("input[name=additionalLink]");
+		let additionalLinks = [];
+
+		for(let i = 0; i < additionalLinkInputs.length; i++)
+			additionalLinks.push(additionalLinkInputs[i].value);
+
 		let application = {
 				jobId: form.elements["jobId"].value,
 				name: form.elements["name"].value,
 				justification: form.elements["justification"].value,
-				code: form.elements["code"].value
+				code: form.elements["code"].value,
+				additionalLinks: additionalLinks
 			};
 
 		Http.postRequest("applications", application).then(response => response.text().then(
@@ -42,7 +49,8 @@ class ApplicationService {
 					tbody.appendChild(ApplicationService.createRow("Job ID:", json.jobId));
 					tbody.appendChild(ApplicationService.createRow("Why should we hire you?:", json.justification));
 					tbody.appendChild(ApplicationService.createRow("Code Repository:", json.code));
-					json.additionalLinks.forEach(link => tbody.appendChild(ApplicationService.createRow("Additional Link:", link)));
+					if(json.additionalLinks)
+						json.additionalLinks.forEach(link => tbody.appendChild(ApplicationService.createRow("Additional Link:", link)));
 
 					table.appendChild(tbody);
 					output.appendChild(table);

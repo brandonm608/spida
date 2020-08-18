@@ -58,6 +58,38 @@ public class ApplicationContollerTest {
 				.expectBody(String.class).isEqualTo("Some Response");
 	}
 
+	// Successful create test with null additionalLinks
+	@Test
+	public void createNullAdditionalLinksTest() {
+		Application application = initApplication("1", "Captain Andersmith", "Something cool",
+				"https://github.com/andersmitch/application.git", null);
+
+		Mockito.when(externalApplicationClientService.create(Mockito.any(Application.class)))
+				.thenReturn(Mono.just("Some Response"));
+
+		request.post().uri("/api/v0/applications").contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON).bodyValue(application).exchange().expectStatus().isCreated()
+				.expectBody(String.class).isEqualTo("Some Response");
+	}
+
+	// Invalid create test with additionalLink over 255 characters
+	@Test
+	public void createAdditionalLinkOver255Test() {
+		Application application = initApplication("1", "Captain Andersmith", "Something cool",
+				"https://github.com/andersmitch/application.git",
+				Collections
+						.singletonList("Very long test data is hard to come by. Very long test data is hard to come by."
+								+ " Very long test data is hard to come by. Very long test data is hard to come by."
+								+ " Very long test data is hard to come by. Very long test data is hard to come by. "
+								+ "Very long test..."));
+
+		Mockito.when(externalApplicationClientService.create(Mockito.any(Application.class)))
+				.thenReturn(Mono.just("Some Response"));
+
+		request.post().uri("/api/v0/applications").contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON).bodyValue(application).exchange().expectStatus().isBadRequest();
+	}
+
 	// Null Application value create test
 	@Test
 	public void createNullTest() {
