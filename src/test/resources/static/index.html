@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Junior Developer Application Demo Project</title>
+<link rel="stylesheet" href="css/main.css" />
+<script type="text/javascript" src="js/http.js"></script>
+<script type="text/javascript" src="js/job.service.js"></script>
+<script type="text/javascript" src="js/application.service.js"></script>
+<script type="text/javascript" src="js/application.ui.js"></script>
+<script type="text/javascript" src="js/selector.js"></script>
+</head>
+
+<body>
+	<ul id="mainSelector" class="selector">
+		<li><a id="jobsSelector" class="selected">Jobs</a></li>
+		<li><a id="applicationsSelector">Applications</a></li>
+	</ul>
+
+	<br />
+
+	<div id="jobs" class="mainContainer container selected">
+		<div class="inline">
+			<ul id="jobsEndpoint" class="endpointSelector">
+				<li><a id="jobListSelector" class="selected">List</a></li>
+			</ul>
+		</div>
+
+		<div class="inline">
+			<div id="jobsList" class="jobsContainer container selected">
+
+				<form onSubmit="JobService.list(); return false;">
+					<button>Fetch Jobs</button>
+				</form>
+
+				<div id="jobsListOutput"></div>
+			</div>
+		</div>
+	</div>
+
+	<div id="applications" class="mainContainer container">
+		<div class="inline">
+			<ul id="applicationEndpoint" class="applicationEndpointSelector">
+				<li><a id="applicationApplySelector" class="selected">Apply</a></li>
+				<li><a id="applicationStatusSelector">Check Status</a></li>
+			</ul>
+		</div>
+
+		<div class="inline">
+			<div id="applicationApplyContainer"
+				class="applicationContainer container selected">
+				<form id="applicationForm"
+					onSubmit="ApplicationService.apply(this); return false;">
+					<table>
+						<tbody>
+							<tr>
+								<td>Job ID:</td>
+								<td><input type="text" name="jobId" maxlength="255" /></td>
+							</tr>
+							<tr>
+								<td>Name:</td>
+								<td><input type="text" name="name" maxlength="255" /></td>
+							</tr>
+							<tr>
+								<td>Why Should we hire you?:</td>
+								<td><textarea rows="10" cols="50" name="justification" maxlength="255"></textarea></td>
+							</tr>
+							<tr>
+								<td>Code Repository:</td>
+								<td><input type="text" name="code" maxlength="255" /></td>
+							</tr>
+							<tr id="additionalLinksButtonsRow">
+								<td><button id="addLinksButton" type="button">Add Additional Links</button></td>
+								<td><button id="removeLinkButton" type="button">Remove Last Link</button></td>
+							</tr>
+							<tr>
+								<td><button type="submit">Submit Application</button></td>
+								<td><button id="resetApplicationButton" type="reset">Clear</button>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+
+				<div id="applicationCreateOutput"></div>
+			</div>
+
+			<div id="applicationStatusContainer"
+				class="applicationContainer container">
+				<form onSubmit="ApplicationService.status(this); return false;">
+					<table>
+						<tbody>
+							<tr>
+								<td>ID:</td>
+								<td><input type="text" name="id" maxlength="255" />
+							</tr>
+							<tr>
+								<td><button type="submit">Check Status</button></td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+
+				<div id="applicationStatusOutput"></div>
+			</div>
+		</div>
+
+	</div>
+</body>
+</html>
+
