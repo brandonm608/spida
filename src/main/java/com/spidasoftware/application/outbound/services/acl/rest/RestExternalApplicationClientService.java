@@ -15,7 +15,7 @@ public class RestExternalApplicationClientService implements ExternalApplication
 	private WebClient applicationClient;
 
 	public RestExternalApplicationClientService(WebClient.Builder builder,
-			@Value("application.spidasoftware.service.baseUri") String baseUri) {
+			@Value("${application.spidasoftware.service.baseUri}") String baseUri) {
 		applicationClient = builder.baseUrl(baseUri + "applications").build();
 	}
 

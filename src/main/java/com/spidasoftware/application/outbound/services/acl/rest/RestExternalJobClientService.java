@@ -15,7 +15,7 @@ public class RestExternalJobClientService implements ExternalJobClientService {
 	private final WebClient jobClient;
 
 	public RestExternalJobClientService(WebClient.Builder builder,
-			@Value("application.spidasoftware.service.baseUri") String baseUri) {
+			@Value("${application.spidasoftware.service.baseUri}") String baseUri) {
 		jobClient = builder.baseUrl(baseUri + "jobs").build();
 	}
 
